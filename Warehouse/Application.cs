@@ -18,13 +18,12 @@ namespace WarehouseApplication
 
             Akce();
         }
-        public void Akce()
+        private void Akce()
         {
             Console.WriteLine("\nAkce:");
             Console.WriteLine("1. Zobrazit polozky na sklade");
             Console.WriteLine("2. Pridat polozku");
             Console.WriteLine("3. Vymazat polozku");
-
             Console.WriteLine("\n0. Ukoncit aplikaci");
 
             while (true)
@@ -60,14 +59,19 @@ namespace WarehouseApplication
                         default:
                             throw new ActionNotFoundException();
                     }
-                } catch (Exception)
+                } 
+                catch (ActionNotFoundException)
                 {
                     Console.WriteLine("Tato akce neexistuje!");
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Zadej cislo!");
                 }
             }
         }
         
-        public void ShowItems()
+        private void ShowItems()
         {
             var items = Warehouse.Items;
             if (items.Count > 0)
@@ -89,10 +93,8 @@ namespace WarehouseApplication
             Akce();
         }
          
-        public void AddItem()
+        private void AddItem()
         {
-            
-            
             while(true)
             {
                 var types = Enum.GetValues<ItemType>();
@@ -117,7 +119,7 @@ namespace WarehouseApplication
                 }
 
                 var item = new Item(info[1], itemType, amount);
-                Console.WriteLine("\nPolozka byla uspesne pridana. \n");
+                Console.WriteLine("\nPolozka byla uspesne pridana.\n");
                 Warehouse.Items.Add(item); 
 
                 break;
@@ -126,13 +128,13 @@ namespace WarehouseApplication
             Akce();
         }
 
-        public void DeleteItem()
+        private void DeleteItem()
         {
             var items = Warehouse.Items;
             if (items.Count > 0)
             {
                 Console.WriteLine("\nPolozky:");
-                Console.WriteLine("Type | Nazev | Mnozstvi");
+                Console.WriteLine("Typ | Nazev | Mnozstvi");
 
                 for (int i = 0; i < items.Count; i++)
                 {
@@ -169,6 +171,7 @@ namespace WarehouseApplication
             {
                 Console.WriteLine("\nNa sklade nejsou zadne polozky!");
             }
+
             Akce();
         }
     }
