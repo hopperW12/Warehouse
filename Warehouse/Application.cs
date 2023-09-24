@@ -18,6 +18,8 @@ namespace WarehouseApplication
 
             Akce();
         }
+
+        //Vyber akce
         private void Akce()
         {
             Console.WriteLine("\nAkce:");
@@ -26,6 +28,7 @@ namespace WarehouseApplication
             Console.WriteLine("3. Vymazat polozku");
             Console.WriteLine("\n0. Ukoncit aplikaci");
 
+            //Bude se ptat dokud nevybral akci
             while (true)
             {
                 Console.Write("\nVyber akci: ");
@@ -74,6 +77,7 @@ namespace WarehouseApplication
         private void ShowItems()
         {
             var items = Warehouse.Items;
+            
             if (items.Count > 0)
             {
                 Console.WriteLine("\nPolozky:");
@@ -97,15 +101,18 @@ namespace WarehouseApplication
         {
             while(true)
             {
+                //Vypis vsech typu z enumu 
                 var types = Enum.GetValues<ItemType>();
                 Console.WriteLine($"\nDostupne typy: {string.Join(", ", types)}");
 
+                //Zadani tvaru typ,nazev,mnozstvi
                 Console.WriteLine("\nNapis ve tvaru: typ,nazev,mnozstvi");
                 var input = Console.ReadLine();
 
                 var info = input.Split(",");
                 if (info.Length != 3) continue;
 
+                //Kontrola zda uzivatel napsal spravne parametry
                 if (!Enum.TryParse(info[0], out ItemType itemType))
                 {
                     Console.WriteLine("Tento typ polozky neexistuje!");
@@ -118,6 +125,7 @@ namespace WarehouseApplication
                     continue;
                 }
 
+                //Vytvoreni a pridani itemu
                 var item = new Item(info[1], itemType, amount);
                 Console.WriteLine("\nPolozka byla uspesne pridana.\n");
                 Warehouse.Items.Add(item); 
@@ -142,6 +150,7 @@ namespace WarehouseApplication
                     Console.WriteLine($"{i + 1}. {item.Type}, {item.Name}, {item.Amount}");
                 }
 
+                //Vyber itemu za pomoci indexu
                 while(true)
                 {
                     Console.WriteLine("\nVyber index ktery chces vymazat: ");
@@ -161,6 +170,7 @@ namespace WarehouseApplication
 
                     }
 
+                    //Vymazani itemu pomoci indexu
                     Warehouse.Items.RemoveAt(index);
                     Console.WriteLine("\nPolozka byla uspesne smazana.");
                     break;
